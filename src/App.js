@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import React, { Suspense, useRef, useState } from "react";
+import Navbar from "./components/navbar";
 import './App.css';
+import { Routes, Route } from "react-router-dom";
+import approutes from "./routes";
 
 function App() {
+  const cartInitialState = {
+    totalAmount: 0,
+    numberOfItems: 0,
+    cartItems: []
+  };
+
+  const categoryRef = useRef(null);
+  const [cartItems, setCartItems] = useState(cartInitialState);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar categoryRef={categoryRef} cartItemsCount={cartItems.numberOfItems}/>
+      <Suspense fallback={<h1 className="">Loading ....</h1>}>
+        <Routes>
+          {approutes.map((route) => (
+            <Route
+              key={route.path}
+              exact
+              path={route.path}
+              element={<route.component categoryRef={categoryRef} cartItems={cartItems} setCartItems={setCartItems}/>}
+            />
+          ))}
+        </Routes>
+      </Suspense>
     </div>
   );
 }
