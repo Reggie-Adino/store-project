@@ -12,7 +12,7 @@ const Navbar = ({ cartItemsCount, isLogged, categoryRef }) => {
     navigate("/")
     setTimeout(() => {
       categoryRef.current?.scrollIntoView({behavior:"smooth"})
-    },300)
+    },700)
   }
 
   return (
@@ -24,12 +24,12 @@ const Navbar = ({ cartItemsCount, isLogged, categoryRef }) => {
         <ul className="nav-ul">
           <Link to="/products">Products</Link>
           <span onClick={handleNavigateScroll} className="about-span">Shop</span>
-          <a href="##">About</a>
+          <Link to="/aboutus">About</Link>
         </ul>
       </div>
 
       <div className="nav-cont-2">
-        {!isLogged && <button className="login-nav" onClick={() => navigate("/logincd ")}>Login</button>}
+        {!isLogged && <button className="login-nav" onClick={() => navigate("/login")}>Login</button>}
         <AiOutlineSearch size={25} />
         <Link to="/cart" className="cart-icon-cont">
           <span className="nav-cart-count">{cartItemsCount}</span>
